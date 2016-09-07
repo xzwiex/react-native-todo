@@ -7,11 +7,12 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import TodoItem from '../../components/TodoItem'
-
+import { Button, Card } from 'react-native-material-design';
 import {
     StyleSheet,
     Text,
-    View
+    View,
+    ScrollView
 } from 'react-native';
 
 class App extends Component {
@@ -21,7 +22,7 @@ class App extends Component {
         //this.state = { checked: true };
     }
 
-    onPress() {
+    _handlePress() {
         console.log('State', this.props);
         //this.setState({ checked: !this.state.checked });
     }
@@ -34,16 +35,20 @@ class App extends Component {
         console.log('MainView Started', this.props);
         return (
             <View style={styles.container}>
-                {this.props.todos.map((todoItem) => {
-                    return <TodoItem key={todoItem.id} item={todoItem} />
-                })}
+                <ScrollView style={styles.scrollView}>
+                    {this.props.todos.map((todoItem) => {
+                        return <TodoItem key={todoItem.id} item={todoItem} />
+                    }) }
+                </ScrollView>
+                <View>
+                    <Button text="+ Add Item" value="NORMAL RAISED" onPress={() => this._handlePress() } />
+                </View>
             </View>
         );
     }
 }
 
 function mapStateToProps(state) {
-    console.log('MapStateToProps', state);
     return {
         todos: state.todos
     }
@@ -56,6 +61,17 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start',
         alignItems: 'flex-start',
         backgroundColor: '#FEFEFE',
+    },
+    scrollView: {
+
+    },
+    button: {
+        backgroundColor: '#999999',
+        color: '#FFFFFF',
+        alignSelf: "stretch",
+
+        textAlign: 'center'
+
     }
 });
 
